@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  laravel:
+    build: .
+    volumes:
+      - ./laravel:/laravel
+    command: php artisan serve --host 0.0.0.0 --port 8081
+    ports:
+      - 8081:8081
+  db:
+    environment:
+      MYSQL_DATABASE: laravel_db
+      MYSQL_ROOT_PASSWORD: password
+      TZ: Asia/Tokyo
+    image: mysql:8.0
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./mysql/mysql.cnf:/etc/mysql/conf.d/mysql.cnf
+    ports:
+      - 3306:3306
+
+volumes:
+  mysql_data:
