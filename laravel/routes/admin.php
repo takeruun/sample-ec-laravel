@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\Auth\NewPasswordController;
 use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Admin\Auth\RegisteredUserController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
+use App\Http\Controllers\Admin\OwnersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,9 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
   return view('admin.dashboard');
 })->middleware(['auth:admin'])->name('dashboard');
+
+Route::resource('owners', OwnersController::class)
+  ->middleware('auth:admin');
 
 
 Route::middleware('guest')->group(function () {
