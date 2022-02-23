@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\LifeCycleTestController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,5 +24,7 @@ Route::get('/dashboard', function () {
 
 Route::get('/test1', [TestController::class, 'test1']);
 Route::get('/test2', [TestController::class, 'test2']);
+
+Route::get('/serviceccontainer', [LifeCycleTestController::class, 'showServiceContainerTest']);
 
 require __DIR__ . '/auth.php';
