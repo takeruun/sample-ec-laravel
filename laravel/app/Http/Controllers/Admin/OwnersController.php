@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Owner; // Eloguent エロクエント
 use Illuminate\Support\Facades\DB; // QueryBuilder クエリビルダー
 use Carbon\Carbon;
+use Faker\Core\Number;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 
@@ -132,5 +133,19 @@ class OwnersController extends Controller
         return redirect()
             ->route('admin.owners.index')
             ->with(['message' => 'オーナーを削除しました。', 'status' => 'alert']);
+    }
+
+    public function expiriedOwnersIndex()
+    {
+        $expiredOwners = Owner::onlyTrashed()->get();
+
+        return view('admin.expired-owners', compact('expiredOwners'));
+    }
+
+    public function expiriedOwnersDestroy($id)
+    {
+        Owner::onlyTrashed()->findOrFail($id)->forceDelete();
+
+        return redirect()->route('admin.expired-owners.index');
     }
 }

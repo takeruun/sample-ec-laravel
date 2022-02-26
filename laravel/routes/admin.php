@@ -33,6 +33,11 @@ Route::get('/dashboard', function () {
 Route::resource('owners', OwnersController::class)
   ->middleware('auth:admin');
 
+Route::prefix('expired-owners')
+  ->middleware(['auth:admin'])->group(function () {
+    Route::get('index', [OwnersController::class, 'expiriedOwnersIndex'])->name('expired-owners.index');
+    Route::delete('destroy/{owner}', [OwnersController::class, 'expiriedOwnersDestroy'])->name('expired-owners.destroy');
+  });
 
 Route::middleware('guest')->group(function () {
   Route::get('register', [RegisteredUserController::class, 'create'])
